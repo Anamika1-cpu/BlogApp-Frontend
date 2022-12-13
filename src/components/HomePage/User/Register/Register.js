@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUserAction } from "../../../../redux/slices/users/userSlice";
-
+import { Navigate } from "react-router-dom";
 //FORM SCHEMA
 const formSchema = Yup.object({
   firstName: Yup.string().required("First name is required"),
@@ -27,7 +27,6 @@ const Register = () => {
     },
     onSubmit: (values) => {
       dispatch(registerUserAction(values));
-      console.log(values);
     },
     validationSchema: formSchema,
   });
@@ -35,7 +34,9 @@ const Register = () => {
   //select state from store
   const storedata = useSelector((store) => store?.users);
   const { appErr, serverErr, registered, loading } = storedata;
-  console.log(storedata);
+  if (registered) {
+    return <Navigate to='/profile' />;
+  }
   return (
     <section className='relative py-20 2xl:py-40 bg-gray-800 overflow-hidden'>
       <div className='relative container px-4 mx-auto'>

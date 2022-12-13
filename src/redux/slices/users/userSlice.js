@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { baseUrl } from "../../../utils/baseUrl";
 
 //register action
 
 export const registerUserAction = createAsyncThunk(
-  "uers/register",
+  "users/register",
   async (user, { rejectWithValue, getState, dispatch }) => {
     try {
       //http call
@@ -14,7 +15,7 @@ export const registerUserAction = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/register",
+        `${baseUrl}/api/users/register`,
         user,
         config
       );
@@ -28,11 +29,42 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+//LOGIN ACTION
+export const loginUserAction = createAsyncThunk(
+  "users/login",
+  async (user, { rejectWithValue, getState, dispatch }) => {
+    try {
+      //http call
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `${baseUrl}/api/users/login`,
+        user,
+        config
+      );
+      //save user in local storage
+      localStorage.setItem("user", JSON.stringify(data));
+      return data;
+    } catch (err) {
+      if (!err?.response) throw err;
+      return rejectWithValue(err?.response?.data);
+    }
+  }
+);
+
+//get user from local storage and save in store
+const userLoginFromStorage = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null;
+
 //SLICES
 const userSlices = createSlice({
   name: "users",
   initialState: {
-    userAuth: "login",
+    userAuth: userLoginFromStorage,
   },
   extraReducers: (builder) => {
     builder.addCase(registerUserAction.pending, (state, action) => {
@@ -47,6 +79,24 @@ const userSlices = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(registerUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    //login
+    builder.addCase(loginUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(loginUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userAuth = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(loginUserAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;
