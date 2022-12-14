@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import {
   BellIcon,
   Bars3Icon,
-  XCircleIcon,
+  XMarkIcon,
   BookOpenIcon,
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { useDispatch } from "react-redux";
+import { logoutUserAction } from "../../../../redux/slices/users/userSlice";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -31,7 +33,7 @@ const AdminNavbar = () => {
     { name: "Your Profile", href: `/profile` },
     { name: "Change your password", href: "/update-password" },
   ];
-
+  const dispatch = useDispatch();
   return (
     <Disclosure as='nav' className='bg-green-800'>
       {({ open }) => (
@@ -44,10 +46,7 @@ const AdminNavbar = () => {
                   <Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
                     <span className='sr-only'>Open main menu</span>
                     {open ? (
-                      <XCircleIcon
-                        className='block h-6 w-6'
-                        aria-hidden='true'
-                      />
+                      <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
                     ) : (
                       <Bars3Icon className='block h-6 w-6' aria-hidden='true' />
                     )}
@@ -91,6 +90,9 @@ const AdminNavbar = () => {
                   </Link>
                   {/* Logout */}
                   <button
+                    onClick={() => {
+                      dispatch(logoutUserAction());
+                    }}
                     type='button'
                     className='relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500'
                   >
