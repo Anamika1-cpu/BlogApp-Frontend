@@ -1,8 +1,7 @@
 import React from "react";
-import { CSSProperties } from "react";
 import RingLoader from "react-spinners/RingLoader";
 
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "0 auto",
   borderColor: "red",
