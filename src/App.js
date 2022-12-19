@@ -5,12 +5,14 @@ import Login from "./components/HomePage/User/Login/Login";
 import Navbar from "./components/HomePage/Navigation/Navbar";
 import AddNewCategory from "./components/Categories/AddNewCategory";
 import CategoryList from "./components/Categories/CategoryList";
+import UpdateCategory from "./components/Categories/UpdateCategory";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path='/update-category/:id' element={<UpdateCategory />} />
         <Route path='/add-category' element={<AddNewCategory />} />
         <Route path='/category-list' element={<CategoryList />} />
         <Route path='/' element={<HomePage />} />
