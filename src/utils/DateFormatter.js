@@ -1,6 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
-const dateFormatter = ({ date }) => {
+const DateFormatter = ({ date }) => {
   return (
     <Moment format='D MMM YYYY' withTitle>
       {date}
@@ -8,4 +8,4 @@ const dateFormatter = ({ date }) => {
   );
 };
 
-export default dateFormatter;
+export default DateFormatter;

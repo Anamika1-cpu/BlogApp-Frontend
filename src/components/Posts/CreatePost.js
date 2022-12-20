@@ -1,10 +1,11 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Dropzone from "react-dropzone";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "../../redux/slices/post/postSlices";
 import CategoryDropDown from "../Categories/CategoryDropDown";
 import styled from "styled-components";
+import { Navigate } from "react-router-dom";
 
 //Form schema
 const formSchema = Yup.object({
@@ -30,6 +31,10 @@ border-color:'red'
 `;
 export default function CreatePost() {
   const dispatch = useDispatch();
+
+  //select store data
+  const post = useSelector((state) => state?.post);
+  const { loading, isCreated, appErr, serverErr } = post;
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -49,6 +54,8 @@ export default function CreatePost() {
     },
     validationSchema: formSchema,
   });
+  //redirect
+  if (isCreated) return <Navigate to='/posts' />;
   return (
     <>
       <div className='min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
@@ -63,6 +70,11 @@ export default function CreatePost() {
               profanity
             </p>
           </p>
+          {appErr || serverErr ? (
+            <p className='mt-2 text-center text-lg text-red-600'>
+              {serverErr} {appErr}
+            </p>
+          ) : null}
         </div>
         <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
           <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
@@ -195,12 +207,22 @@ export default function CreatePost() {
               </div>
               <div>
                 {/* Submit btn */}
-                <button
-                  type='submit'
-                  className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                >
-                  Create
-                </button>
+                {loading ? (
+                  <button
+                    type='submit'
+                    className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600
+                     '
+                  >
+                    Loading...
+                  </button>
+                ) : (
+                  <button
+                    type='submit'
+                    className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  >
+                    Create
+                  </button>
+                )}
               </div>
             </form>
           </div>

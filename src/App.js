@@ -9,6 +9,7 @@ import UpdateCategory from "./components/Categories/UpdateCategory";
 import PrivateProtectRoute from "./components/HomePage/Navigation/ProtectedRoutes/PrivateProtectRoute";
 import AdminRoutes from "./components/HomePage/Navigation/ProtectedRoutes/AdminRoutes";
 import CreatePost from "./components/Posts/CreatePost";
+import PostsList from "./redux/slices/post/PostsList";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </Route>
         <Route element={<PrivateProtectRoute />}>
           <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/posts' element={<PostsList />} />
         </Route>
         <Route path='/' element={<HomePage />} />
         <Route path='/register' element={<Register />} />

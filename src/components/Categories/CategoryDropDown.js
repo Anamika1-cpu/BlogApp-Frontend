@@ -4,7 +4,6 @@ import Select from "react-select";
 import { fetchCategoriesAction } from "../../redux/slices/category/categorySlice";
 
 const CategoryDropDown = (props) => {
-  console.log(props);
   //dispatch action
   const dispatch = useDispatch();
   useEffect(() => {
