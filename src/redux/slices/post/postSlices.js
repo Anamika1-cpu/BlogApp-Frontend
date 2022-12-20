@@ -1,6 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { create } from "yup/lib/Reference";
 import { baseUrl } from "../../../utils/baseUrl";
 
 //Action to redirect
@@ -43,17 +42,19 @@ export const createPostAction = createAsyncThunk(
 );
 
 //Fectch POST ACtion
-export const fetchPostsAtion = createAsyncThunk(
+export const fetchPostsAction = createAsyncThunk(
   "post/list",
-  async (posts, { getState, rejectWithValue, dispatch }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  async (category, { getState, rejectWithValue, dispatch }) => {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
     try {
       //http call
-      const { data } = await axios.get(`${baseUrl}/api/posts`, posts, config);
+      const { data } = await axios.get(
+        `${baseUrl}/api/posts/?category=${category}`
+      );
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -85,17 +86,17 @@ const postSlice = createSlice({
     });
     //fetch posts
 
-    builder.addCase(fetchPostsAtion.pending, (state, action) => {
+    builder.addCase(fetchPostsAction.pending, (state, action) => {
       state.loading = true;
     });
 
-    builder.addCase(fetchPostsAtion.fulfilled, (state, action) => {
+    builder.addCase(fetchPostsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.postLists = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
     });
-    builder.addCase(fetchPostsAtion.rejected, (state, action) => {
+    builder.addCase(fetchPostsAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;

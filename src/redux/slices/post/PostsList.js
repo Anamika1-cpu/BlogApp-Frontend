@@ -9,22 +9,24 @@ import { Link } from "react-router-dom";
 import DateFormatter from "../../../utils/DateFormatter";
 import Loading from "../../../utils/Loading";
 import { fetchCategoriesAction } from "../category/categorySlice";
-import { fetchPostsAtion } from "./postSlices";
+import { fetchPostsAction } from "./postSlices";
 
 export default function PostsList() {
   //dispatch
   const dispatch = useDispatch();
   //post dispatch
   useEffect(() => {
-    dispatch(fetchPostsAtion());
+    dispatch(fetchPostsAction(""));
   }, [dispatch]);
   //categories dispatch
   useEffect(() => {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
+
   //select post from store
   const post = useSelector((state) => state.post);
   const { loading, postLists, appErr, serverErr } = post;
+  console.log(postLists);
   //select post from store
   const category = useSelector((state) => state.category);
   const {
@@ -50,7 +52,10 @@ export default function PostsList() {
               </div>
               <div class=' block text-right w-1/2'>
                 {/* View All */}
-                <button class='inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-green-600 hover:bg-green-700 text-gray-50 font-bold leading-loose transition duration-200'>
+                <button
+                  onClick={() => dispatch(fetchPostsAction(""))}
+                  class='inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-green-600 hover:bg-green-700 text-gray-50 font-bold leading-loose transition duration-200'
+                >
                   View All Posts
                 </button>
               </div>
@@ -73,7 +78,12 @@ export default function PostsList() {
                     ) : (
                       categoryList.map((category) => (
                         <li>
-                          <p className='block cursor-pointer py-2 px-3 mb-4 rounded text-yellow-500 font-bold bg-gray-500'>
+                          <p
+                            onClick={() =>
+                              dispatch(fetchPostsAction(category?.title))
+                            }
+                            className='block cursor-pointer py-2 px-3 mb-4 rounded text-yellow-500 font-bold bg-gray-500'
+                          >
                             {category?.title}
                           </p>
                         </li>
