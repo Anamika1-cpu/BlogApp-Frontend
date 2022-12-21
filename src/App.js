@@ -11,6 +11,7 @@ import AdminRoutes from "./components/HomePage/Navigation/ProtectedRoutes/AdminR
 import CreatePost from "./components/Posts/CreatePost";
 import PostsList from "./redux/slices/post/PostsList";
 import PostDetails from "./redux/slices/post/PostDetails";
+import UpdatePost from "./redux/slices/post/UpdatePost";
 
 function App() {
   return (
@@ -24,10 +25,10 @@ function App() {
         </Route>
         <Route element={<PrivateProtectRoute />}>
           <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/update-post/:id' element={<UpdatePost />} />
         </Route>
         <Route path='/posts' element={<PostsList />} />
         <Route path='/posts/:id' element={<PostDetails />} />
-
         <Route path='/' element={<HomePage />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />

@@ -7,14 +7,18 @@ import DateFormatter from "../../../utils/DateFormatter";
 import Loading from "../../../utils/Loading";
 
 const PostDetails = () => {
+  //get data from store
+  const post = useSelector((state) => state?.post);
+  const { loading, postDetails, appErr, serverErr } = post;
+  //get id
   const { id } = useParams();
   console.log(id);
+  //dispatch
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPostDetailsAction(id));
   }, [dispatch, id]);
-  const post = useSelector((state) => state?.post);
-  const { loading, postDetails, appErr, serverErr } = post;
+
   return (
     <>
       {loading ? (
@@ -42,13 +46,13 @@ const PostDetails = () => {
               <div className='inline-flex pt-14 mb-14 items-center border-t border-gray-500'>
                 <img
                   className='mr-8 w-20 lg:w-24 h-20 lg:h-24 rounded-full'
-                  src={postDetails?.user?.profilePhoto}
+                  // src={postDetails?.user?.profilePhoto}
                   alt=''
                 />
                 <div className='text-left'>
                   <h4 className='mb-1 text-2xl font-bold text-gray-50'>
                     <span className='text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
-                      {postDetails.user?.firstName} {postDetails.user?.lastName}
+                      {/* {postDetails.user?.firstName} {postDetails.user?.lastName} */}
                     </span>
                   </h4>
                   <p className='text-gray-500'>
@@ -62,7 +66,10 @@ const PostDetails = () => {
                   {postDetails?.description}
                   {/* Show delete and update btn if created user */}
                   <p className='flex'>
-                    <Link className='p-3'>
+                    <Link
+                      to={`/update-post/${postDetails?._id}`}
+                      className='p-3'
+                    >
                       <PencilSquareIcon className='h-8 mt-3 text-yellow-300' />
                     </Link>
                     <button className='ml-3'>
