@@ -9,24 +9,16 @@ import { Link } from "react-router-dom";
 import DateFormatter from "../../../utils/DateFormatter";
 import Loading from "../../../utils/Loading";
 import { fetchCategoriesAction } from "../category/categorySlice";
-import { fetchPostsAction } from "./postSlices";
+import {
+  fetchPostsAction,
+  toggleAddDislikesToPost,
+  toggleAddLikesToPost,
+} from "./postSlices";
 
 export default function PostsList() {
-  //dispatch
-  const dispatch = useDispatch();
-  //post dispatch
-  useEffect(() => {
-    dispatch(fetchPostsAction(""));
-  }, [dispatch]);
-  //categories dispatch
-  useEffect(() => {
-    dispatch(fetchCategoriesAction());
-  }, [dispatch]);
-
   //select post from store
   const post = useSelector((state) => state.post);
-  const { loading, postLists, appErr, serverErr } = post;
-  console.log(postLists);
+  const { loading, postLists, appErr, serverErr, likes, disLikes } = post;
   //select post from store
   const category = useSelector((state) => state.category);
   const {
@@ -35,7 +27,17 @@ export default function PostsList() {
     appErr: catAppErr,
     serverErr: catServerErr,
   } = category;
-  console.log(categoryList, catLoading, catAppErr, catServerErr);
+  //dispatch
+  const dispatch = useDispatch();
+  //post dispatch
+  useEffect(() => {
+    dispatch(fetchPostsAction(""));
+  }, [dispatch, likes, disLikes]);
+  //categories dispatch
+  useEffect(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
+
   return (
     <>
       <section>
@@ -104,7 +106,7 @@ export default function PostsList() {
                 ) : (
                   postLists?.map((post) => (
                     <div class='flex flex-wrap bg-gray-900 -mx-3  lg:mb-6'>
-                      <div class='mb-10  w-full lg:w-1/4 px-3'>
+                      <div key={post.id} class='mb-10  w-full lg:w-1/4 px-3'>
                         <Link>
                           {/* Post image */}
                           <img
@@ -119,7 +121,12 @@ export default function PostsList() {
                           <div className='flex flex-row justify-center items-center ml-4 mr-4 pb-2 pt-1'>
                             {/* Togle like  */}
                             <div className=''>
-                              <HandThumbUpIcon className='h-7 w-7 text-indigo-600 cursor-pointer' />
+                              <HandThumbUpIcon
+                                onClick={() =>
+                                  dispatch(toggleAddLikesToPost(post._id, post))
+                                }
+                                className='h-7 w-7 text-indigo-600 cursor-pointer'
+                              />
                             </div>
                             <div className='pl-2 text-gray-600'>
                               {post?.likes?.length ? post?.likes?.length : 0}
@@ -128,7 +135,12 @@ export default function PostsList() {
                           {/* Dislike */}
                           <div className='flex flex-row  justify-center items-center ml-4 mr-4 pb-2 pt-1'>
                             <div>
-                              <HandThumbDownIcon className='h-7 w-7 cursor-pointer text-gray-600' />
+                              <HandThumbDownIcon
+                                onClick={() =>
+                                  dispatch(toggleAddDislikesToPost(post._id))
+                                }
+                                className='h-7 w-7 cursor-pointer text-gray-600'
+                              />
                             </div>
                             <div className='pl-2 text-gray-600'>
                               {post?.disLikes?.length
@@ -156,7 +168,10 @@ export default function PostsList() {
                         </Link>
                         <p class='text-gray-300'>{post?.description}</p>
                         {/* Read more */}
-                        <Link className='text-indigo-500 hover:underline'>
+                        <Link
+                          to={`/posts/${post._id}`}
+                          className='text-indigo-500 hover:underline'
+                        >
                           Read More..
                         </Link>
                         {/* User Avatar */}

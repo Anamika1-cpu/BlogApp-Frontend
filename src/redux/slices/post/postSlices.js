@@ -45,11 +45,6 @@ export const createPostAction = createAsyncThunk(
 export const fetchPostsAction = createAsyncThunk(
   "post/list",
   async (category, { getState, rejectWithValue, dispatch }) => {
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
     try {
       //http call
       const { data } = await axios.get(
@@ -65,6 +60,82 @@ export const fetchPostsAction = createAsyncThunk(
   }
 );
 
+//Add likes to Post Action
+export const toggleAddLikesToPost = createAsyncThunk(
+  "post/likes",
+  async (postId, { getState, rejectWithValue, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    console.log(user);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.post(
+        `${baseUrl}/api/posts/likes`,
+        { postId },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+//Add disLikes to Post Action
+export const toggleAddDislikesToPost = createAsyncThunk(
+  "post/disLikes",
+  async (postId, { getState, rejectWithValue, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    console.log(user);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.post(
+        `${baseUrl}/api/posts/dislike`,
+        { postId },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+// Post deatils Action
+export const fetchPostDetailsAction = createAsyncThunk(
+  "post/details",
+  async (id, { getState, rejectWithValue, dispatch }) => {
+    try {
+      //http call
+      const { data } = await axios.get(`${baseUrl}/api/posts/${id}`);
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 //SLICES
 const postSlice = createSlice({
   name: "post",
@@ -97,6 +168,60 @@ const postSlice = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(fetchPostsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    //like toggle posts
+
+    builder.addCase(toggleAddLikesToPost.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(toggleAddLikesToPost.fulfilled, (state, action) => {
+      state.loading = false;
+      state.likes = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(toggleAddLikesToPost.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    //dislIKe toggle posts
+
+    builder.addCase(toggleAddDislikesToPost.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(toggleAddDislikesToPost.fulfilled, (state, action) => {
+      state.loading = false;
+      state.disLikes = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(toggleAddDislikesToPost.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    //fetch post details
+
+    builder.addCase(fetchPostDetailsAction.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchPostDetailsAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.postDetails = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchPostDetailsAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;
