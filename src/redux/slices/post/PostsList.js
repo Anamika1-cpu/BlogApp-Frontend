@@ -76,7 +76,9 @@ export default function PostsList() {
                         {catAppErr} {catServerErr}
                       </h1>
                     ) : categoryList.length <= 0 ? (
-                      <h1>No categories found</h1>
+                      <h1 className='text-yellow-400 text-lg text-center'>
+                        No categories found
+                      </h1>
                     ) : (
                       categoryList.map((category) => (
                         <li>
@@ -102,7 +104,9 @@ export default function PostsList() {
                     {serverErr} {appErr}
                   </h1>
                 ) : postLists?.length <= 0 ? (
-                  <h1>No Posts Found</h1>
+                  <h1 className='text-yellow-400 text-lg text-center'>
+                    No Posts Found
+                  </h1>
                 ) : (
                   postLists?.map((post) => (
                     <div class='flex flex-wrap bg-gray-900 -mx-3  lg:mb-6'>

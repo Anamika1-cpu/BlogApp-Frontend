@@ -1,24 +1,32 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPostDetailsAction } from "./postSlices";
+import { deletePostAction, fetchPostDetailsAction } from "./postSlices";
 import DateFormatter from "../../../utils/DateFormatter";
 import Loading from "../../../utils/Loading";
 
 const PostDetails = () => {
   //get data from store
   const post = useSelector((state) => state?.post);
-  const { loading, postDetails, appErr, serverErr } = post;
+  const { loading, postDetails, appErr, serverErr, isDeleted } = post;
+  //getting login user and post creator
+  const postCreator = postDetails?.user?._id;
+  const user = useSelector((state) => state.users);
+  const {
+    userAuth: { _id },
+  } = user;
+  console.log(_id, postCreator);
+  const areIdSame = _id === postCreator;
+  console.log(areIdSame);
   //get id
   const { id } = useParams();
-  console.log(id);
   //dispatch
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPostDetailsAction(id));
   }, [dispatch, id]);
-
+  if (isDeleted) return <Navigate to='/posts' />;
   return (
     <>
       {loading ? (
@@ -65,17 +73,22 @@ const PostDetails = () => {
                 <p className='mb-6 text-left  text-xl text-gray-200'>
                   {postDetails?.description}
                   {/* Show delete and update btn if created user */}
-                  <p className='flex'>
-                    <Link
-                      to={`/update-post/${postDetails?._id}`}
-                      className='p-3'
-                    >
-                      <PencilSquareIcon className='h-8 mt-3 text-yellow-300' />
-                    </Link>
-                    <button className='ml-3'>
-                      <TrashIcon className='h-8 mt-3 text-red-600' />
-                    </button>
-                  </p>
+                  {areIdSame ? (
+                    <p className='flex'>
+                      <Link
+                        to={`/update-post/${postDetails?._id}`}
+                        className='p-3'
+                      >
+                        <PencilSquareIcon className='h-8 mt-3 text-yellow-300' />
+                      </Link>
+                      <button
+                        onClick={() => dispatch(deletePostAction(id))}
+                        className='ml-3'
+                      >
+                        <TrashIcon className='h-8 mt-3 text-red-600' />
+                      </button>
+                    </p>
+                  ) : null}
                 </p>
               </div>
             </div>
