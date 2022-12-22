@@ -3,8 +3,11 @@ import { useFormik } from "formik";
 import { Navigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import CategoryDropDown from "../../../components/Categories/CategoryDropDown";
-import { fetchPostDetailsAction, updatePostAction } from "./postSlices";
+import CategoryDropDown from "../Categories/CategoryDropDown";
+import {
+  fetchPostDetailsAction,
+  updatePostAction,
+} from "../../redux/slices/post/postSlices";
 
 //Validation
 const formSchema = Yup.object({

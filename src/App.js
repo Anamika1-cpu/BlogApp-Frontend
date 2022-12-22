@@ -9,9 +9,9 @@ import UpdateCategory from "./components/Categories/UpdateCategory";
 import PrivateProtectRoute from "./components/HomePage/Navigation/ProtectedRoutes/PrivateProtectRoute";
 import AdminRoutes from "./components/HomePage/Navigation/ProtectedRoutes/AdminRoutes";
 import CreatePost from "./components/Posts/CreatePost";
-import PostsList from "./redux/slices/post/PostsList";
-import PostDetails from "./redux/slices/post/PostDetails";
-import UpdatePost from "./redux/slices/post/UpdatePost";
+import UpdatePost from "./components/Posts/UpdatePost";
+import PostsList from "./components/Posts/PostsList";
+import PostDetails from "./components/Posts/PostDetails";
 
 function App() {
   return (

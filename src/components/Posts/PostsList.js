@@ -6,14 +6,14 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import DateFormatter from "../../../utils/DateFormatter";
-import Loading from "../../../utils/Loading";
-import { fetchCategoriesAction } from "../category/categorySlice";
+import DateFormatter from "../../utils/DateFormatter";
+import Loading from "../../utils/Loading";
+import { fetchCategoriesAction } from "../../redux/slices/category/categorySlice";
 import {
   fetchPostsAction,
   toggleAddDislikesToPost,
   toggleAddLikesToPost,
-} from "./postSlices";
+} from "../../redux/slices/post/postSlices.js";
 
 export default function PostsList() {
   //select post from store
@@ -110,7 +110,7 @@ export default function PostsList() {
                 ) : (
                   postLists?.map((post) => (
                     <div class='flex flex-wrap bg-gray-900 -mx-3  lg:mb-6'>
-                      <div key={post.id} class='mb-10  w-full lg:w-1/4 px-3'>
+                      <div key={post.id} class='mb-10  w-full lg:w-1/4 '>
                         <Link>
                           {/* Post image */}
                           <img
