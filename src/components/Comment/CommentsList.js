@@ -5,6 +5,10 @@ import { deleteCommentAction } from "../../redux/slices/comment/CommentSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CommentsList({ comments }) {
+  //get data from store
+  const user = useSelector((state) => state?.users);
+  const { userAuth } = user;
+  const isLoginUser = userAuth._id;
   const dispatch = useDispatch();
   return (
     <div>
@@ -42,20 +46,24 @@ export default function CommentsList({ comments }) {
                         {comment?.description}
                       </p>
                       {/* Check if is the same user created this comment */}
-
-                      <p class='flex'>
-                        <Link class='p-3'>
-                          <PencilSquareIcon class='h-5 mt-3 text-yellow-300' />
-                        </Link>
-                        <button
-                          onClick={() =>
-                            dispatch(deleteCommentAction(comment?._id))
-                          }
-                          class='ml-3'
-                        >
-                          <TrashIcon class='h-5 mt-3 text-red-600' />
-                        </button>
-                      </p>
+                      {isLoginUser === comment?.user._id ? (
+                        <p class='flex'>
+                          <Link
+                            to={`/update-comment/${comment._id}`}
+                            class='p-3'
+                          >
+                            <PencilSquareIcon class='h-5 mt-3 text-yellow-300' />
+                          </Link>
+                          <button
+                            onClick={() =>
+                              dispatch(deleteCommentAction(comment?._id))
+                            }
+                            class='ml-3'
+                          >
+                            <TrashIcon class='h-5 mt-3 text-red-600' />
+                          </button>
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                 </li>

@@ -12,6 +12,7 @@ import CreatePost from "./components/Posts/CreatePost";
 import UpdatePost from "./components/Posts/UpdatePost";
 import PostsList from "./components/Posts/PostsList";
 import PostDetails from "./components/Posts/PostDetails";
+import UpdateComment from "./components/Comment/UpdateComment";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route element={<PrivateProtectRoute />}>
           <Route path='/create-post' element={<CreatePost />} />
           <Route path='/update-post/:id' element={<UpdatePost />} />
+          <Route path='/update-comment/:id' element={<UpdateComment />} />
         </Route>
         <Route path='/posts' element={<PostsList />} />
         <Route path='/posts/:id' element={<PostDetails />} />
