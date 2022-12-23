@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import {
+  fetchUserAction,
+  updateUserAction,
+} from "../../../../redux/slices/users/userSlice";
 
 //Form schema
 const formSchema = Yup.object({
@@ -13,27 +17,50 @@ const formSchema = Yup.object({
 });
 
 const UpdateProfileForm = () => {
+  const { id } = useParams();
+  //dispatch
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUserAction(id));
+  }, [dispatch, id]);
+
+  //get user from store
+  const user = useSelector((state) => state?.users);
+  const { userProfile, isUpdated, appErr, serverErr, loading } = user;
   //formik
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      bio: "",
+      firstName: userProfile?.firstName,
+      lastName: userProfile?.lastName,
+      email: userProfile?.email,
+      bio: userProfile?.bio,
     },
     onSubmit: (values) => {
       //dispath the action
-      // dispatch(registerUserAction(values));
+      dispatch(updateUserAction(values));
       console.log(values);
     },
     validationSchema: formSchema,
   });
+  if (isUpdated) return <Navigate to={`/profile/${id}`} />;
   return (
     <div className='min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <h3 className='mt-6 text-center text-3xl font-extrabold text-gray-300'>
-          you want to update your profile?
+          Hey buddy!{" "}
+          <span className='text-grenn-300'>
+            {userProfile?.firstName} {userProfile?.lastName}{" "}
+          </span>
+          Do you want to update your profile?
         </h3>
+        {/* ERR */}
+        {serverErr || appErr ? (
+          <h2 className='text-red-400 text-center'>
+            {appErr}
+            {serverErr}
+          </h2>
+        ) : null}
       </div>
 
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
@@ -136,12 +163,23 @@ const UpdateProfileForm = () => {
             </div>
             <div>
               {/* submit btn */}
-              <button
-                type='submit'
-                className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-              >
-                Update
-              </button>
+              {loading ? (
+                <button
+                  disabled
+                  type='submit'
+                  className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md
+                 shadow-sm text-sm font-medium text-white bg-gray-600'
+                >
+                  Loading...
+                </button>
+              ) : (
+                <button
+                  type='submit'
+                  className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                >
+                  Update
+                </button>
+              )}
             </div>
           </form>
 

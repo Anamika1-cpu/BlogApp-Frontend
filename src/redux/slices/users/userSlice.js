@@ -4,6 +4,7 @@ import { baseUrl } from "../../../utils/baseUrl";
 
 //Action to redirect
 const resetProfilePhoto = createAction("profilePhoto/reset");
+const resetUserAction = createAction("user/profile/reset");
 
 //register action
 export const registerUserAction = createAsyncThunk(
@@ -137,6 +138,40 @@ export const UploadProfilePhotoAction = createAsyncThunk(
   }
 );
 
+//Update user action
+export const updateUserAction = createAsyncThunk(
+  "user/update",
+  async (useR, { rejectWithValue, getState, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.put(
+        `${baseUrl}/api/users`,
+        {
+          lastName: useR?.lastName,
+          firstName: useR?.firstName,
+          bio: useR?.bio,
+          email: useR?.email,
+        },
+        config
+      );
+      dispatch(resetUserAction());
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 //SLICES
 const userSlices = createSlice({
   name: "users",
@@ -232,6 +267,28 @@ const userSlices = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(UploadProfilePhotoAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    // UPDATE USER SLICE
+    builder.addCase(updateUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(resetUserAction, (state, action) => {
+      state.isUpdated = true;
+    });
+    builder.addCase(updateUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userUpdated = action?.payload;
+      state.isUpdated = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(updateUserAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;
