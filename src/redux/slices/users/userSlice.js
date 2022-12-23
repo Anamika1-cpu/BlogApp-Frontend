@@ -1,9 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseUrl } from "../../../utils/baseUrl";
 
-//register action
+//Action to redirect
+const resetProfilePhoto = createAction("profilePhoto/reset");
 
+//register action
 export const registerUserAction = createAsyncThunk(
   "users/register",
   async (user, { rejectWithValue, getState, dispatch }) => {
@@ -74,6 +76,67 @@ const userLoginFromStorage = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
 
+//fetch User details ACtion
+export const fetchUserAction = createAsyncThunk(
+  "user/profile",
+  async (id, { getState, rejectWithValue, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    console.log(user);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.get(`${baseUrl}/api/users/${id}`, config);
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//UPload Profile Photo ACtion
+export const UploadProfilePhotoAction = createAsyncThunk(
+  "user/profile-photo",
+  async (userImg, { getState, rejectWithValue, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    console.log(user);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const formPostData = new FormData();
+      formPostData.append("image", userImg?.image);
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/profilePhoto-upload`,
+        formPostData,
+        config
+      );
+      dispatch(resetProfilePhoto());
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //SLICES
 const userSlices = createSlice({
   name: "users",
@@ -131,6 +194,45 @@ const userSlices = createSlice({
     builder.addCase(logoutUserAction.rejected, (state, action) => {
       state.loading = false;
       state.userAuth = undefined;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+
+    // FETCH USER DETIALS SLICES
+    builder.addCase(fetchUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userProfile = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+    // UPLOAD PROFILE PHOTO SLICE
+    builder.addCase(UploadProfilePhotoAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(resetProfilePhoto, (state, action) => {
+      state.isUploaded = true;
+    });
+    builder.addCase(UploadProfilePhotoAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.profilePhoto = action?.payload;
+      state.isUploaded = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(UploadProfilePhotoAction.rejected, (state, action) => {
+      state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;
     });

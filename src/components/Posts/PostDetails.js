@@ -15,6 +15,7 @@ const PostDetails = () => {
   //get data from store
   const post = useSelector((state) => state?.post);
   const { loading, postDetails, appErr, serverErr, isDeleted } = post;
+
   //getting login user and post creator
   const postCreator = postDetails?.user?._id;
   const user = useSelector((state) => state.users);

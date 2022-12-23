@@ -19,6 +19,7 @@ export default function PostsList() {
   //select post from store
   const post = useSelector((state) => state.post);
   const { loading, postLists, appErr, serverErr, likes, disLikes } = post;
+  // console.log(postLists.length);
   //select post from store
   const category = useSelector((state) => state.category);
   const {
@@ -110,7 +111,7 @@ export default function PostsList() {
                 ) : (
                   postLists?.map((post) => (
                     <div class='flex flex-wrap bg-gray-900 -mx-3  lg:mb-6'>
-                      <div key={post.id} class='mb-10  w-full lg:w-1/4 '>
+                      <div key={post.id} class='mb-10  w-full lg:w-1/4 px-3'>
                         <Link>
                           {/* Post image */}
                           <img

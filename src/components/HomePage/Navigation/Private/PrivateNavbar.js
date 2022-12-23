@@ -24,8 +24,9 @@ function classNames(...classes) {
 }
 
 const PrivateNavbar = ({ isLogin }) => {
+  console.log(isLogin.profilePhoto);
   const userNavigation = [
-    { name: "Your Profile", href: `/profile` },
+    { name: "Your Profile", href: `/profile/${isLogin._id}` },
     { name: "Change your password", href: "/update-password" },
   ];
   const dispatch = useDispatch();
@@ -106,7 +107,7 @@ const PrivateNavbar = ({ isLogin }) => {
                             <span className='sr-only'>Open user menu</span>
                             <img
                               className='h-8 w-8 rounded-full'
-                              // src={isLogin?.profilePhoto}
+                              src={isLogin?.profilePhoto}
                               alt=''
                             />
                           </Menu.Button>
@@ -174,7 +175,7 @@ const PrivateNavbar = ({ isLogin }) => {
                 <div className='flex-shrink-0'>
                   <img
                     className='h-10 w-10 rounded-full'
-                    // src={isLogin.profilePhoto}
+                    src={isLogin?.profilePhoto}
                     alt=''
                   />
                 </div>

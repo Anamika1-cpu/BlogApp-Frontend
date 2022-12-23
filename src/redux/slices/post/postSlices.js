@@ -28,6 +28,7 @@ export const createPostAction = createAsyncThunk(
       formPostData.append("description", posts?.description);
       formPostData.append("category", posts?.category);
       formPostData.append("image", posts?.image);
+      formPostData.append("user", user);
       const { data } = await axios.post(
         `${baseUrl}/api/posts`,
         formPostData,
