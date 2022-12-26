@@ -172,6 +172,64 @@ export const updateUserAction = createAsyncThunk(
     }
   }
 );
+
+//Follow user action
+export const followUserAction = createAsyncThunk(
+  "user/follow",
+  async (userToFollowId, { rejectWithValue, getState, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.patch(
+        `${baseUrl}/api/users/follow`,
+        { followId: userToFollowId },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//Unfollow user action
+export const unfollowUserAction = createAsyncThunk(
+  "user/unfollow",
+  async (userToUnfollowId, { rejectWithValue, getState, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      //http call
+      const { data } = await axios.patch(
+        `${baseUrl}/api/users/unfollow`,
+        { followId: userToUnfollowId },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 //SLICES
 const userSlices = createSlice({
   name: "users",
@@ -289,6 +347,42 @@ const userSlices = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+    // FOLLOW USER SLICE
+    builder.addCase(followUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(followUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userFollowed = action?.payload;
+      state.userUnfollowed = undefined;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(followUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.payload?.message;
+    });
+    // UNFOLLOW USER SLICE
+    builder.addCase(unfollowUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(unfollowUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userUnfollowed = action?.payload;
+      state.userFollowed = undefined;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(unfollowUserAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.payload?.message;

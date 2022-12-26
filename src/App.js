@@ -16,6 +16,7 @@ import UpdateComment from "./components/Comment/UpdateComment";
 import Profile from "./components/HomePage/User/Profile/Profile";
 import UploadProfilePhoto from "./components/HomePage/User/Profile/UploadProfilePhoto";
 import UpdateProfileForm from "./components/HomePage/User/Profile/UpdateProfileForm";
+import SendEmail from "./components/HomePage/User/Emailing/SendEmail";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path='/update-category/:id' element={<UpdateCategory />} />
           <Route path='/add-category' element={<AddNewCategory />} />
           <Route path='/category-list' element={<CategoryList />} />
+          <Route path='/send-mail' element={<SendEmail />} />
         </Route>
         <Route element={<PrivateProtectRoute />}>
           <Route path='/create-post' element={<CreatePost />} />

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AdminNavbar from "./Admin/AdminNavbar";
 import PrivateNavbar from "./Private/PrivateNavbar";
 import PublicNavbar from "./Public/PublicNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import AccountVerificationAlertWarning from "./Alerts/AccountVerificationAlertWarning";
+
 const Navbar = () => {
   const state = useSelector((state) => state?.users);
-  const { userAuth } = state;
+  const { userAuth, userProfile } = state;
   const isAdmin = userAuth?.isAdmin;
-  console.log(isAdmin);
+  const isAccountVerified = userProfile?.isAccountVerified;
+  console.log(userProfile);
+
   return (
     <>
       {isAdmin ? (
@@ -17,6 +21,8 @@ const Navbar = () => {
       ) : (
         <PublicNavbar />
       )}
+      {/*  Alert  */}
+      {!isAccountVerified && <AccountVerificationAlertWarning />}
     </>
   );
 };

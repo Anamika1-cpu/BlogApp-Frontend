@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   HeartIcon,
   FaceFrownIcon,
@@ -8,21 +8,39 @@ import {
 } from "@heroicons/react/24/outline";
 import { EnvelopeIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserAction } from "../../../../redux/slices/users/userSlice";
+import {
+  fetchUserAction,
+  followUserAction,
+  unfollowUserAction,
+} from "../../../../redux/slices/users/userSlice";
 import DateFormatter from "../../../../utils/DateFormatter";
 import Loading from "../../../../utils/Loading";
 
-export default function Profile() {
+export default function Profile(props) {
+  // console.log(props);
   const { id } = useParams();
-  console.log(id);
   //fetch uiser profile
   const dispatch = useDispatch();
+  //history
+  const history = useNavigate();
+  //get data from store
+  const user = useSelector((state) => state?.users);
+  const { userProfile, loading, appErr, serverErr, followed, unfollowed } =
+    user;
+  //fech user profile
   useEffect(() => {
     dispatch(fetchUserAction(id));
-  }, [id, dispatch]);
-  //get data from store
-  const users = useSelector((state) => state?.users);
-  const { userProfile, loading, appErr, serverErr } = users;
+  }, [id, dispatch, followed, unfollowed]);
+
+  //send mail handle click
+  const sendMailNavigate = () => {
+    history("/send-mail", {
+      state: {
+        id: userProfile?._id,
+        email: userProfile?.email,
+      },
+    });
+  };
   return (
     <>
       <div className='min-h-screen  bg-green-500'>
@@ -118,22 +136,24 @@ export default function Profile() {
                             <div className='mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4'>
                               {/* // Hide follow button from the same */}
                               <div>
-                                <button
-                                  // onClick={() =>
-                                  //   dispatch(unFollowUserAction(profile?._id))
-                                  // }
-                                  className='inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
-                                >
-                                  <FaceFrownIcon
-                                    className='-ml-1 mr-2 h-5 w-5 text-gray-400'
-                                    aria-hidden='true'
-                                  />
-                                  <span>Unfollow</span>
-                                </button>
-
-                                <>
+                                {userProfile?.isFollowing ? (
                                   <button
-                                    // onClick={followHandler}
+                                    onClick={() =>
+                                      dispatch(unfollowUserAction(id))
+                                    }
+                                    className='mr-2 inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
+                                  >
+                                    <FaceFrownIcon
+                                      className='-ml-1 mr-2 h-5 w-5 text-gray-400'
+                                      aria-hidden='true'
+                                    />
+                                    <span>Unfollow</span>
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() =>
+                                      dispatch(followUserAction(id))
+                                    }
                                     type='button'
                                     className='inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
                                   >
@@ -142,8 +162,13 @@ export default function Profile() {
                                       aria-hidden='true'
                                     />
                                     <span>Follow </span>
+                                    <span className='pl-2'>
+                                      {userProfile?.followers?.length}
+                                    </span>
                                   </button>
-                                </>
+                                )}
+
+                                <></>
                               </div>
 
                               {/* Update Profile */}
@@ -161,8 +186,8 @@ export default function Profile() {
                                 </Link>
                               </>
                               {/* Send Mail */}
-                              <Link
-                                // to={`/send-mail?email=${profile?.email}`}
+                              <button
+                                onClick={sendMailNavigate}
                                 className='inline-flex justify-center bg-indigo-900 px-4 py-2 border border-yellow-700 shadow-sm text-sm font-medium rounded-md text-gray-700  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
                               >
                                 <EnvelopeIcon
@@ -172,7 +197,7 @@ export default function Profile() {
                                 <span className='text-base mr-2  text-bold text-yellow-500'>
                                   Send Message
                                 </span>
-                              </Link>
+                              </button>
                             </div>
                           </div>
                         </div>

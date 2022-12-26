@@ -3,12 +3,14 @@ import usersReducers from "../slices/users/userSlice";
 import categoriesReducers from "../slices/category/categorySlice";
 import post from "../slices/post/postSlices";
 import comment from "../slices/comment/CommentSlice";
+import sendMail from "../slices/email/emailSlices";
 const store = configureStore({
   reducer: {
     users: usersReducers,
     category: categoriesReducers,
     post,
     comment,
+    sendMail,
   },
 });
 
