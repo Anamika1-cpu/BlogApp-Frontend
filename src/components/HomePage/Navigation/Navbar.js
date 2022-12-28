@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
 import AdminNavbar from "./Admin/AdminNavbar";
 import PrivateNavbar from "./Private/PrivateNavbar";
 import PublicNavbar from "./Public/PublicNavbar";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AccountVerificationAlertWarning from "./Alerts/AccountVerificationAlertWarning";
+import AccountVerificationSuccessAlert from "./Alerts/AccountVerificationSuccessAlert";
 
 const Navbar = () => {
+  //get user from store
   const state = useSelector((state) => state?.users);
   const { userAuth, userProfile } = state;
   const isAdmin = userAuth?.isAdmin;
   const isAccountVerified = userProfile?.isAccountVerified;
-  console.log(userProfile);
 
+  //account verfification
+  const account = useSelector((state) => state?.acc);
+  const { loading, appErr, serverErr, token } = account;
   return (
     <>
       {isAdmin ? (
@@ -22,7 +25,19 @@ const Navbar = () => {
         <PublicNavbar />
       )}
       {/*  Alert  */}
-      {!isAccountVerified && <AccountVerificationAlertWarning />}
+      {userAuth && !userAuth.isAccountVerified && (
+        <AccountVerificationAlertWarning />
+      )}
+
+      {/* success msg */}
+      {loading && <h2 className='text-center'>Loading Please wait..</h2>}
+      {token && <AccountVerificationSuccessAlert />}
+      {appErr || serverErr ? (
+        <h2 className='text-center text-red-500'>
+          {serverErr}
+          {appErr}
+        </h2>
+      ) : null}
     </>
   );
 };

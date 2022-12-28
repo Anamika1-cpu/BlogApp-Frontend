@@ -17,6 +17,7 @@ import Profile from "./components/HomePage/User/Profile/Profile";
 import UploadProfilePhoto from "./components/HomePage/User/Profile/UploadProfilePhoto";
 import UpdateProfileForm from "./components/HomePage/User/Profile/UpdateProfileForm";
 import SendEmail from "./components/HomePage/User/Emailing/SendEmail";
+import AccountVerified from "./components/HomePage/User/AccountVerification/AccountVerified";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             element={<UploadProfilePhoto />}
           />
           <Route path='/upload-profile/:id' element={<UpdateProfileForm />} />
+          <Route path='/verify-account/:token' element={<AccountVerified />} />
         </Route>
         <Route path='/posts' element={<PostsList />} />
         <Route path='/posts/:id' element={<PostDetails />} />
