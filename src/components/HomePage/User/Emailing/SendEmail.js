@@ -17,7 +17,6 @@ const SendEmail = (props) => {
   const dispatch = useDispatch();
   //location
   const location = useLocation();
-  console.log(location.state.email);
   //formik
   const formik = useFormik({
     initialValues: {
@@ -32,6 +31,7 @@ const SendEmail = (props) => {
     },
     validationSchema: formSchema,
   });
+  console.log(location);
   //select data from store
   const sendMail = useSelector((state) => state?.sendMail);
   const { isMailSent, loading, appErr, serverErr } = sendMail;
@@ -142,7 +142,7 @@ const SendEmail = (props) => {
                   type='submit'
                   className='w-full flex justify-center py-2 px-4 border 
                 border-transparent rounded-md shadow-sm text-sm 
-                font-medium text-white bg-indigo-600 '
+                font-medium text-white bg-gray-600 '
                 >
                   Loading...
                 </button>

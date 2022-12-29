@@ -64,15 +64,18 @@ const PostDetails = () => {
               <div className='inline-flex pt-14 mb-14 items-center border-t border-gray-500'>
                 <img
                   className='mr-8 w-20 lg:w-24 h-20 lg:h-24 rounded-full'
-                  // src={postDetails?.user?.profilePhoto}
+                  src={postDetails?.user?.profilePhoto}
                   alt=''
                 />
                 <div className='text-left'>
-                  <h4 className='mb-1 text-2xl font-bold text-gray-50'>
-                    <span className='text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
-                      {/* {postDetails.user?.firstName} {postDetails.user?.lastName} */}
-                    </span>
-                  </h4>
+                  <Link to={`/profile/${postDetails?.user?._id}`}>
+                    <h4 className='mb-1 text-2xl font-bold text-gray-50'>
+                      <span className='text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
+                        {postDetails?.user?.firstName}{" "}
+                        {postDetails?.user?.lastName}
+                      </span>
+                    </h4>
+                  </Link>
                   <p className='text-gray-500'>
                     <DateFormatter date={postDetails?.createdAt} />{" "}
                   </p>

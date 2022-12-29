@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import poster from "../../../../img/poster.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../../redux/slices/users/userSlice";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 //Form schema
 const formSchema = Yup.object({
   email: Yup.string().required("Email is required"),
@@ -30,7 +30,7 @@ const Login = () => {
   const store = useSelector((store) => store?.users);
   const { appErr, serverErr, userAuth, loading } = store;
   if (userAuth) {
-    return <Navigate to='/profile' />;
+    return <Navigate to={`/profile/${userAuth._id}`} />;
   }
   return (
     <>
@@ -146,6 +146,14 @@ const Login = () => {
                       </button>
                     )}
                   </form>
+                  <div className='p-2'>
+                    <Link
+                      to='/password-reset-token'
+                      className='font-medium text-indigo-600 hover:text-indigo-500'
+                    >
+                      Forgot Password ?
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className='w-full lg:w-3/5 px-4 mb-16 lg:mb-0 order-first lg:order-last'>
