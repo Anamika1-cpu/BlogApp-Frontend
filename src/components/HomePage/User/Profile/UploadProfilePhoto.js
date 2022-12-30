@@ -51,12 +51,6 @@ export default function UploadProfilePhoto() {
         <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-300'>
           Upload profile photo
         </h2>
-        {/* Displya err here */}
-        {/* {appErr || serverErr ? (
-          <h2 className='text-red-500'>
-            {appErr} {serverErr}
-          </h2>
-        ) : null} */}
       </div>
 
       <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>

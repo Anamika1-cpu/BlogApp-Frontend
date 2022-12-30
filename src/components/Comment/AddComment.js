@@ -47,7 +47,7 @@ const AddComment = ({ postId }) => {
           type='text'
           name='text'
           id='text'
-          className='shadow-sm focus:ring-indigo-500  mr-2 focus:border-indigo-500 block w-full p-2 border-1 sm:text-sm border-gray-300 rounded-md'
+          className='shadow-sm focus:ring-indigo-500 px-12 mr-2 focus:border-indigo-500 block w-full p-2 border-1 sm:text-sm border-gray-300 rounded-md'
           placeholder='Add New comment'
         />
 
@@ -55,7 +55,7 @@ const AddComment = ({ postId }) => {
           <button
             disabled
             type='submit'
-            className='inline-flex items-center px-2.5 py-1.5 border 
+            className='inline-flex items-center px-8 py-1.5 border 
           border-transparent text-xs font-medium rounded shadow-sm text-white
            bg-gray-400'
           >
@@ -64,7 +64,7 @@ const AddComment = ({ postId }) => {
         ) : (
           <button
             type='submit'
-            className='inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            className='inline-flex items-center px-8 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
           >
             Submit
           </button>

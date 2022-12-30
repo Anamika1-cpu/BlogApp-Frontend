@@ -42,14 +42,14 @@ export default function PostsList() {
   return (
     <>
       <section>
-        <div class='py-20 bg-gray-900 min-h-screen radius-for-skewed'>
+        <div class='py-20 bg-gray-900 min-h-screen font-sans radius-for-skewed'>
           <div class='container mx-auto px-4'>
             <div class='mb-16 flex flex-wrap items-center'>
               <div class='w-full lg:w-1/2'>
-                <span class='text-green-600 font-bold'>
+                <span class='text-green-600 text-xl font-semibold'>
                   Latest Posts from our awesome authors
                 </span>
-                <h2 class='text-4xl text-gray-300 lg:text-5xl font-bold font-heading'>
+                <h2 class='text-4xl font-playfair text-gray-300 lg:text-5xl font-thin font-heading'>
                   Latest Post
                 </h2>
               </div>
@@ -57,7 +57,9 @@ export default function PostsList() {
                 {/* View All */}
                 <button
                   onClick={() => dispatch(fetchPostsAction(""))}
-                  class='inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-green-600 hover:bg-green-700 text-gray-50 font-bold leading-loose transition duration-200'
+                  class='inline-block py-2 mt-4 
+                   px-6 rounded-l-xl rounded-t-xl bg-green-600
+                    hover:bg-green-700 text-gray-50 font-bold leading-loose transition duration-200'
                 >
                   View All Posts
                 </button>
@@ -65,8 +67,8 @@ export default function PostsList() {
             </div>
             <div class='flex flex-wrap -mx-3'>
               <div class='mb-8 lg:mb-0 w-full lg:w-1/4 px-3'>
-                <div class='py-4 px-6 bg-gray-600 shadow rounded'>
-                  <h4 class='mb-4 text-gray-500 font-bold uppercase'>
+                <div class='py-4 px-6  shadow rounded'>
+                  <h4 class='mb-4 text-gray-300 font-bold p-2.5  rounded-full text-center bg-blue-500 uppercase'>
                     Categories
                   </h4>
                   <ul>
@@ -77,7 +79,7 @@ export default function PostsList() {
                         {catAppErr} {catServerErr}
                       </h1>
                     ) : categoryList?.length <= 0 ? (
-                      <h1 className='text-yellow-400 text-lg text-center'>
+                      <h1 className='text-yellow-400 text-xl font-thin text-center'>
                         No categories found
                       </h1>
                     ) : (
@@ -87,7 +89,8 @@ export default function PostsList() {
                             onClick={() =>
                               dispatch(fetchPostsAction(category?.title))
                             }
-                            className='block cursor-pointer py-2 px-3 mb-4 rounded text-yellow-500 font-bold bg-gray-500'
+                            className='block cursor-pointer py-3 px-3 mb-2 rounded-sm
+                             text-gray-200 font-semibold  bg-gray-800 transparent'
                           >
                             {category?.title}
                           </p>
@@ -105,8 +108,8 @@ export default function PostsList() {
                     {serverErr} {appErr}
                   </h1>
                 ) : postLists?.length <= 0 ? (
-                  <h1 className='text-yellow-400 text-lg text-center'>
-                    No Posts Found
+                  <h1 className='text-yellow-400 text-xl text-center'>
+                    No Posts Found!!
                   </h1>
                 ) : (
                   postLists?.map((post) => (

@@ -39,7 +39,7 @@ const AdminNavbar = ({ isLogin }) => {
     <Disclosure as='nav' className='bg-green-800'>
       {({ open }) => (
         <>
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-playfair'>
             <div className='flex justify-between h-16'>
               <div className='flex'>
                 <div className='-ml-2 mr-2 flex items-center md:hidden'>
@@ -131,7 +131,8 @@ const AdminNavbar = ({ isLogin }) => {
                         >
                           <Menu.Items
                             static
-                            className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+                            className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1
+                             bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
                           >
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>

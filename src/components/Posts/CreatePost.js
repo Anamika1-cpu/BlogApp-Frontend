@@ -58,13 +58,13 @@ export default function CreatePost() {
   if (isCreated) return <Navigate to='/posts' />;
   return (
     <>
-      <div className='min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+      <div className='min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-playfair'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-300'>
+          <h2 className='mt-6 text-center text-4xl font-extrabold text-gray-900'>
             Create Post
           </h2>
 
-          <p className='mt-2 text-center text-sm text-gray-600'>
+          <p className='mt-2 text-center text-sm text-gray-900'>
             <p className='font-medium text-green-600 hover:text-indigo-500'>
               Share your ideas to the word. Your post must be free from
               profanity
@@ -82,7 +82,7 @@ export default function CreatePost() {
               <div>
                 <label
                   htmlFor='email'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-gray-900'
                 >
                   Title
                 </label>
@@ -107,7 +107,7 @@ export default function CreatePost() {
               {/* Category input goes here */}
               <label
                 htmlFor='password'
-                className='block text-sm font-medium text-gray-700'
+                className='block text-sm font-medium text-gray-900'
               >
                 Select Category
               </label>
@@ -121,7 +121,7 @@ export default function CreatePost() {
               <div>
                 <label
                   htmlFor='password'
-                  className='block text-sm font-medium text-gray-700'
+                  className='block text-sm font-medium text-gray-900'
                 >
                   Description
                 </label>
@@ -171,11 +171,11 @@ export default function CreatePost() {
                 </div> */}
                 <label
                   htmlFor='password'
-                  className='block text-sm font-medium mt-3 mb-2 text-gray-700'
+                  className='block text-sm font-medium mt-3 mb-2 text-gray-900'
                 >
                   Select image to upload
                 </label>
-                <Container className='container bg-gray-700'>
+                <Container className='container bg-gray-900'>
                   <Dropzone
                     onBlur={formik.handleBlur("image")}
                     accept='image/jpeg, image/png'

@@ -47,16 +47,16 @@ const PostDetails = () => {
           {serverErr}
         </h1>
       ) : (
-        <section className='py-20 2xl:py-40 bg-gray-800 overflow-hidden'>
+        <section className='py-20 2xl:py-15 bg-gray-900 overflow-hidden font-playfair'>
           <div className='container px-4 mx-auto'>
             {/* Post Image */}
             <img
-              className='mb-24 w-full h-96 object-cover'
+              className=' mb-14 w-full h-96 object-cover'
               src={postDetails?.image}
               alt=''
             />
             <div className='max-w-2xl mx-auto text-center'>
-              <h2 className='mt-7 mb-14 text-6xl 2xl:text-7xl text-white font-bold font-heading'>
+              <h2 className='mt-7 mb-14 text-6xl 2xl:text-7xl text-white font-thin font-heading'>
                 {postDetails?.title}
               </h2>
 
@@ -67,10 +67,10 @@ const PostDetails = () => {
                   src={postDetails?.user?.profilePhoto}
                   alt=''
                 />
-                <div className='text-left'>
+                <div className='text-left font-mono'>
                   <Link to={`/profile/${postDetails?.user?._id}`}>
-                    <h4 className='mb-1 text-2xl font-bold text-gray-50'>
-                      <span className='text-xl lg:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
+                    <h4 className='mb-1 text-2xl font-playfair text-gray-50'>
+                      <span className='text-xl lg:text-2xl  text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
                         {postDetails?.user?.firstName}{" "}
                         {postDetails?.user?.lastName}
                       </span>
@@ -83,22 +83,22 @@ const PostDetails = () => {
               </div>
               {/* Post description */}
               <div className='max-w-xl mx-auto'>
-                <p className='mb-6 text-left  text-xl text-gray-200'>
+                <p className='mb-6 text-left font-sans text-xl text-gray-300'>
                   {postDetails?.description}
                   {/* Show delete and update btn if created user */}
                   {areIdSame ? (
                     <p className='flex'>
                       <Link
                         to={`/update-post/${postDetails?._id}`}
-                        className='p-3'
+                        className='p-3 '
                       >
-                        <PencilSquareIcon className='h-8 mt-3 text-yellow-300' />
+                        <PencilSquareIcon className='h-8 mt-3 lg:mr-80 sm:mr-50 text-yellow-300' />
                       </Link>
                       <button
                         onClick={() => dispatch(deletePostAction(id))}
                         className='ml-3'
                       >
-                        <TrashIcon className='h-8 mt-3 text-red-600' />
+                        <TrashIcon className='h-8 mt-3 lg:ml-20 sm:ml:50 text-red-600' />
                       </button>
                     </p>
                   ) : null}
@@ -108,7 +108,7 @@ const PostDetails = () => {
           </div>
           {/* Add comment Form component here */}
           <AddComment postId={id} />
-          <div className='flex justify-center  items-center'>
+          <div className='flex justify-center font-sans  items-center'>
             <CommentsList comments={postDetails?.comments} />
           </div>
         </section>

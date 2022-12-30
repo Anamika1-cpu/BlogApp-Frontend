@@ -10,6 +10,7 @@ import { EnvelopeIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchUserAction,
+  userProfileAction,
   followUserAction,
   unfollowUserAction,
 } from "../../../../redux/slices/users/userSlice";
@@ -32,10 +33,14 @@ export default function Profile(props) {
     followed,
     unfollowed,
     userAuth,
+    profile,
   } = user;
   //fech user profile
   useEffect(() => {
     dispatch(fetchUserAction(id));
+  }, [id, dispatch, followed, unfollowed]);
+  useEffect(() => {
+    dispatch(userProfileAction(id));
   }, [id, dispatch, followed, unfollowed]);
   //navigate
   const navigate = useNavigate();
@@ -53,7 +58,7 @@ export default function Profile(props) {
   const isLoginUser = userAuth._id === id;
   return (
     <>
-      <div className='min-h-screen  bg-green-500'>
+      <div className='min-h-screen  bg-blue-500 font-sans'>
         {loading ? (
           <Loading />
         ) : appErr || serverErr ? (
@@ -62,7 +67,7 @@ export default function Profile(props) {
             {serverErr}
           </h2>
         ) : (
-          <div className='h-screen flex overflow-hidden bg-white'>
+          <div className='h-screen flex overflow-hidden bg-white font-sans'>
             {/* Static sidebar for desktop */}
 
             <div className='flex flex-col min-w-0 flex-1 overflow-hidden'>
@@ -87,9 +92,9 @@ export default function Profile(props) {
                               alt={userProfile?.firstName}
                             />
                           </div>
-                          <div className='mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1'>
+                          <div className='mt-8 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1'>
                             <div className=' flex flex-col 2xl:block mt-10 min-w-0 flex-1'>
-                              <h1 className='text-2xl font-bold text-gray-900 '>
+                              <h1 className='text-3xl font-bold font text-gray-900 '>
                                 {userProfile?.firstName}
                                 {userProfile?.lastName}
 
@@ -107,13 +112,13 @@ export default function Profile(props) {
                                   </span>
                                 )}
                               </h1>
-                              <p className='m-3 text-lg'>
+                              <p className='m-3  ml-1 font-mono  text-sm'>
                                 Date Joined:
                                 <DateFormatter
                                   date={userProfile?.createdAt}
                                 />{" "}
                               </p>
-                              <p className='text-green-400 mt-2 mb-2'>
+                              <p className='text-green-500 mt-2 mb-2'>
                                 {userProfile?.posts?.length} posts{" "}
                                 {userProfile?.followers.length} followers{" "}
                                 {userProfile?.following.length} following
@@ -122,7 +127,7 @@ export default function Profile(props) {
                               <div className='flex items-center  mb-2'>
                                 <EyeIcon className='h-5 w-5 ' />
                                 <div className='pl-2'>
-                                  {userProfile?.viewedBy?.length}{" "}
+                                  {profile?.viewedBy?.length}{" "}
                                   <span className='text-indigo-400 cursor-pointer hover:underline'>
                                     users viewed your profile
                                   </span>
@@ -136,10 +141,12 @@ export default function Profile(props) {
                                 className='inline-flex justify-center w-48 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
                               >
                                 <ArrowUpTrayIcon
-                                  className='-ml-1 mr-2 h-5 w-5 text-gray-400'
+                                  className='-ml-1 mr-2 h-5 w-5 text-gray-800'
                                   aria-hidden='true'
                                 />
-                                <span>Upload Photo</span>
+                                <span className='text-gray-800'>
+                                  Upload Photo
+                                </span>
                               </Link>
                             </div>
 
@@ -155,7 +162,7 @@ export default function Profile(props) {
                                       className='mr-2 inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
                                     >
                                       <FaceFrownIcon
-                                        className='-ml-1 mr-2 h-5 w-5 text-gray-400'
+                                        className='-ml-1 mr-2 h-5 w-5 text-gray-800'
                                         aria-hidden='true'
                                       />
                                       <span>Unfollow</span>
@@ -166,13 +173,15 @@ export default function Profile(props) {
                                         dispatch(followUserAction(id))
                                       }
                                       type='button'
-                                      className='inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
+                                      className='inline-flex  justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500'
                                     >
                                       <HeartIcon
-                                        className='-ml-1 mr-2 h-5 w-5 text-gray-400'
+                                        className='-ml-1 mr-2 h-5 w-5 text-gray-800 '
                                         aria-hidden='true'
                                       />
-                                      <span>Follow </span>
+                                      <span className='text-gray-800'>
+                                        Follow{" "}
+                                      </span>
                                       <span className='pl-2'>
                                         {userProfile?.followers?.length}
                                       </span>
@@ -292,15 +301,15 @@ export default function Profile(props) {
                                   to={`/posts/${post?._id}`}
                                   className='hover:underline'
                                 >
-                                  <h3 className='mb-1 text-2xl text-green-600 font-bold font-heading'>
+                                  <h3 className='mb-1 text-2xl font-bold text-green-600 font-heading'>
                                     {post?.title}
                                   </h3>
                                 </Link>
-                                <p className='text-gray-600 truncate'>
+                                <p className='text-gray-600 font-sans truncate'>
                                   {post?.description}
                                 </p>
                                 <Link
-                                  className='text-indigo-500 hover:underline'
+                                  className='text-indigo-500 font-sans hover:underline'
                                   to={`/posts/${post?._id}`}
                                 >
                                   Read more

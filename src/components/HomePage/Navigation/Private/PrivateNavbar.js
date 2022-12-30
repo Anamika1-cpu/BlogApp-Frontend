@@ -33,7 +33,7 @@ const PrivateNavbar = ({ isLogin }) => {
     <Disclosure as='nav' className='bg-gray-800'>
       {({ open }) => (
         <>
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-playfair'>
             <div className='flex justify-between h-16'>
               <div className='flex'>
                 <div className='-ml-2 mr-2 flex items-center md:hidden'>
