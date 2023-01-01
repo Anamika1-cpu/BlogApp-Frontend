@@ -153,6 +153,14 @@ const Login = () => {
                       Forgot Password ?
                     </Link>
                   </div>
+                  <div className='px-2'>
+                    <Link
+                      to='/register'
+                      className='font-medium text-indigo-600 hover:text-indigo-500'
+                    >
+                      Create New Account Here..
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className='w-full lg:w-3/5 px-4 mb-16 lg:mb-0 order-first lg:order-last'>

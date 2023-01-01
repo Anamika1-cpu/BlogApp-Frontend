@@ -38,24 +38,24 @@ const Register = () => {
     return <Navigate to='/profile' />;
   }
   return (
-    <section className='relative py-20 2xl:py-40 bg-gray-800 overflow-hidden font-playfair'>
+    <section className='relative py-20 2xl:py-40 bg-gray-800 overflow-hidden '>
       <div className='relative container px-4 mx-auto'>
         <div className='max-w-5xl mx-auto'>
           <div className='flex flex-wrap items-center -mx-4'>
             <div className='w-full lg:w-1/2 px-4 mb-16 lg:mb-0'>
               <div className='max-w-md mb-40'>
-                <span className='text-xl mb-10 text-blue-400 font-bold'>
+                <span className='text-xl font-playfair mb-10 text-blue-400 font-bold'>
                   Register Account
                 </span>
-                <h2 className='mt-5 mb-15 text-5xl leading-25 font-heading text-white'>
+                <h2 className='mt-5 mb-15 text-5xl font-playfair leading-25 font-heading text-white'>
                   Create an account and start pending down your ideas
                 </h2>
               </div>
             </div>
             <div className='w-full lg:w-1/2 px-4'>
-              <div className='px-6 lg:px-20 py-12 lg:py-24 bg-gray-600 rounded-lg'>
+              <div className='px-8 lg:px-20 py-12 lg:py-24 font-sans bg-gray-600 rounded-lg'>
                 <form onSubmit={formik.handleSubmit}>
-                  <h3 className='mb-10 text-2xl text-white font-bold font-heading'>
+                  <h3 className='mb-10   text-3xl text-white font-bold font-heading'>
                     Register Account
                     {/* display error message */}
                     {appErr || serverErr ? (
