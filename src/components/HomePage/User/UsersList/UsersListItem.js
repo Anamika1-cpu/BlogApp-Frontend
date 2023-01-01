@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { EnvelopeOpenIcon } from "@heroicons/react/24/solid";
-import { sendMailAction } from "../../../../redux/slices/email/emailSlices";
 import { useDispatch } from "react-redux";
 import {
   userBlockAction,

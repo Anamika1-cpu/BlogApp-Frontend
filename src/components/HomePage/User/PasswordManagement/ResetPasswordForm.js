@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { passwordResetTokenAction } from "../../../../redux/slices/users/userSlice";
@@ -35,9 +35,9 @@ const ResetPasswordForm = () => {
             Password Reset Form
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
-            <a className='font-medium text-indigo-600 hover:text-indigo-500'>
+            <Link className='font-medium text-indigo-600 hover:text-indigo-500'>
               Reset your password if you have forgotten
-            </a>
+            </Link>
           </p>
         </div>
         {/* Err msg */}

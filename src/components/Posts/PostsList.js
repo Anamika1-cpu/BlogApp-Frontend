@@ -49,7 +49,7 @@ export default function PostsList() {
                 <span class='text-green-600 text-xl font-semibold'>
                   Latest Posts from our awesome authors
                 </span>
-                <h2 class='text-4xl font-playfair text-gray-300 lg:text-5xl font-thin font-heading'>
+                <h2 class='text-4xl  text-gray-300 lg:text-6xl font-playfair font-thin font-heading'>
                   Latest Post
                 </h2>
               </div>
@@ -65,12 +65,12 @@ export default function PostsList() {
                 </button>
               </div>
             </div>
-            <div class='flex flex-wrap -mx-3'>
-              <div class='mb-8 lg:mb-0 w-full lg:w-1/4 px-3'>
-                <div class='py-4 px-6  shadow rounded'>
-                  <h4 class='mb-4 text-gray-300 font-bold p-2.5  rounded-full text-center bg-blue-500 uppercase'>
+            <div class='flex flex-wrap  -mx-3'>
+              <div class='mb-8 lg:mb-0  w-full lg:w-1/4 px-3'>
+                <div class='py-4 px-6 bg-gray-600 shadow rounded'>
+                  <h1 class='mb-4 text-gray-300 font-bold p-2.5  rounded-full text-center bg-blue-500 uppercase'>
                     Categories
-                  </h4>
+                  </h1>
                   <ul>
                     {catLoading ? (
                       <Loading />

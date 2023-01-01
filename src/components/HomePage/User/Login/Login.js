@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import poster from "../../../../img/poster.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../../redux/slices/users/userSlice";
 import { Link, Navigate } from "react-router-dom";
@@ -46,10 +45,10 @@ const Login = () => {
           <div className='max-w-5xl mx-auto'>
             <div className='flex flex-wrap items-center -mx-4'>
               <div className='w-full lg:w-2/5 px-4'>
-                <div className='px-6 lg:px-12 py-12 lg:py-24 bg-white shadow-lg rounded-lg'>
+                <div className='px-6 lg:px-12 py-12 lg:py-24 font-sans bg-white shadow-lg rounded-lg'>
                   {/* Form */}
                   <form onSubmit={formik.handleSubmit}>
-                    <h3 className='mb-10 text-2xl font-bold font-heading'>
+                    <h3 className='mb-10 text-3xl lg:-ml-5 font-bold font-heading'>
                       {/* Header */}
                       Login to your Account
                       {/* display error message */}
@@ -198,7 +197,7 @@ const Login = () => {
                   </svg>
                 </span>
                 <h2 className='mb-10 text-center text-6xl lg:text-7xl text-gray-300 font-bold font-heading'>
-                  Ready to start? Login Now.
+                  Ready to start ? Login Now.
                 </h2>
               </div>
             </div>

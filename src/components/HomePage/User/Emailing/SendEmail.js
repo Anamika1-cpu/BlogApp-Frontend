@@ -40,9 +40,9 @@ const SendEmail = (props) => {
     <div className='min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
       <div className='sm:mx-auto sm:w-full sm:max-w-md'>
         <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-300'>
-          Send Mesage
+          Send Message
           {/* Email title */}
-          <span className='text-green-300'>email title</span>
+          <span className='text-green-300'> Email Title </span>
         </h2>
 
         <p className='mt-2 text-center text-lg text-red-600'>

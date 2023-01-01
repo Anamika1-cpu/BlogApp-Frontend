@@ -32,10 +32,10 @@ const UpdatePassword = () => {
 
   if (isPasswordUpdated) return <Navigate to={`/profile/${userAuth?._id}`} />;
   return (
-    <div className='min-h-screen bg-gray-700  flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
-      <div className='sm:mx-auto sm:w-full sm:max-w-md'>
+    <div className='min-h-screen bg-gray-800  flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
+      <div className='sm:mx-auto  sm:w-full sm:max-w-md'>
         <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-300'>
-          Change your password
+          Change Your Password
         </h2>
         {appErr || serverErr ? (
           <h2 className='text-red-500 pt-2 text-center'>

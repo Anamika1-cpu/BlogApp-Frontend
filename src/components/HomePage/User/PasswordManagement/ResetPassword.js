@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Navigate, Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { passwordResetAction } from "../../../../redux/slices/users/userSlice";
+import { useEffect } from "react";
 
 //Form schema
 const formSchema = Yup.object({
@@ -14,8 +15,6 @@ const formSchema = Yup.object({
 const ResetPassword = () => {
   const { token } = useParams();
 
-  //history
-  const history = useNavigate();
   const dispatch = useDispatch();
   //formik
   const formik = useFormik({
@@ -37,13 +36,15 @@ const ResetPassword = () => {
   const users = useSelector((state) => state?.users);
   const { passwordReset, loading, appErr, serverErr } = users;
 
+  //history
+  const navigate = useNavigate();
   //Navigate
 
   useEffect(() => {
     setTimeout(() => {
-      if (passwordReset) history("/login");
+      if (passwordReset) navigate("/login");
     }, 5000);
-  }, [passwordReset]);
+  }, [passwordReset, navigate]);
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8'>
@@ -53,9 +54,9 @@ const ResetPassword = () => {
             Password Reset
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
-            <a className='font-medium text-indigo-600 hover:text-indigo-500'>
+            <Link className='font-medium text-indigo-600 hover:text-indigo-500'>
               Reset your password if you have forgotten
-            </a>
+            </Link>
           </p>
         </div>
         {/* Err msg */}

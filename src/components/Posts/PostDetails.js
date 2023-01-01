@@ -70,7 +70,7 @@ const PostDetails = () => {
                 <div className='text-left font-mono'>
                   <Link to={`/profile/${postDetails?.user?._id}`}>
                     <h4 className='mb-1 text-2xl font-playfair text-gray-50'>
-                      <span className='text-xl lg:text-2xl  text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
+                      <span className='text-2xl lg:text-2xl  text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 to-orange-600'>
                         {postDetails?.user?.firstName}{" "}
                         {postDetails?.user?.lastName}
                       </span>

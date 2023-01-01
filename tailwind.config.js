@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         playfair: ["Playfair Display", "serif"],
         roboto: ["Roboto", "sans-serif"],
+        garamond: ["EB Garamond", "serif"],
       },
     },
   },

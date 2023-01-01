@@ -87,14 +87,15 @@ export default function Profile(props) {
                         <div className='-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5'>
                           <div className='flex -mt-20'>
                             <img
-                              className='h-24 w-24 rounded-full  ring-4 ring-white sm:h-32 sm:w-32'
+                              className='h-24 w-24 rounded-full 
+                               ring-4 ring-white sm:h-32 sm:w-32'
                               src={userProfile?.profilePhoto}
                               alt={userProfile?.firstName}
                             />
                           </div>
                           <div className='mt-8 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1'>
                             <div className=' flex flex-col 2xl:block mt-10 min-w-0 flex-1'>
-                              <h1 className='text-3xl font-bold font text-gray-900 '>
+                              <h1 className='text-4xl font-bold font-garamond text-gray-900 '>
                                 {userProfile?.firstName}
                                 {userProfile?.lastName}
 
@@ -239,7 +240,7 @@ export default function Profile(props) {
                     </div>
                     <div className='flex justify-center place-items-start flex-wrap  md:mb-0'>
                       <div className='w-full md:w-1/3 px-4 mb-4 md:mb-0'>
-                        <h1 className='text-center text-xl border-gray-500 mb-2 border-b-2'>
+                        <h1 className='text-center text-xl font-sans font-bold text-gray-800 border-gray-500 mb-2 border-b-2'>
                           Who viewed my profile :{" "}
                           {userProfile?.viewedBy?.length}
                         </h1>
@@ -278,7 +279,11 @@ export default function Profile(props) {
                       </div>
                       {/* All my Post */}
                       <div className='w-full md:w-2/3 px-4 mb-4 md:mb-0'>
-                        <h1 className='text-center text-xl border-gray-500 mb-2 border-b-2'>
+                        <h1
+                          className='text-center text-xl font-sans
+                        text-gray-800
+                         font-bold border-gray-500 mb-2 border-b-2'
+                        >
                           My Post - {userProfile?.posts?.length}
                         </h1>
                         {/* Loop here */}

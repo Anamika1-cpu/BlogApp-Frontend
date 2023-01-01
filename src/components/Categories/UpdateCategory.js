@@ -23,7 +23,7 @@ const UpdateCategory = () => {
   //fetchSingleCategory
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, []);
+  }, [dispatch, id]);
 
   //select state from store
   const state = useSelector((state) => state?.category);
@@ -38,7 +38,7 @@ const UpdateCategory = () => {
     },
     onSubmit: (values) => {
       //build up the date for update
-      // dispath the action
+      // dispatch the action
       dispatch(updateCategoriesAction({ title: values?.title, id }));
     },
     validationSchema: formSchema,

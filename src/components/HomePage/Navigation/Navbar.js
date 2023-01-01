@@ -8,9 +8,8 @@ import AccountVerificationSuccessAlert from "./Alerts/AccountVerificationSuccess
 const Navbar = () => {
   //get user from store
   const state = useSelector((state) => state?.users);
-  const { userAuth, userProfile } = state;
+  const { userAuth } = state;
   const isAdmin = userAuth?.isAdmin;
-  const isAccountVerified = userProfile?.isAccountVerified;
 
   //account verfification
   const account = useSelector((state) => state?.acc);
